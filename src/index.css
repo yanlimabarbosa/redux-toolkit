@@ -225,6 +225,7 @@ Cart Item
   margin: 1.5rem 0;
 }
 .cart-item img {
+  border-radius: 10px;
   width: 5rem;
   height: 5rem;
   object-fit: cover;
