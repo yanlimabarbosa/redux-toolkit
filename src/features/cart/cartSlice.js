@@ -32,7 +32,9 @@ export const getCartItems = createAsyncThunk(
 
       const response = await axios.get(url)
       return response.data
-    } catch (error) {}
+    } catch (error) {
+      return thunkAPI.rejectWithValue("something went wrong")
+    }
   }
 )
 
@@ -81,6 +83,7 @@ const cartSlice = createSlice({
         state.cartItems = action.payload
       })
       .addCase(getCartItems.rejected, (state, action) => {
+        // see reject value from thunk API on action payload:
         console.log(action)
         state.isLoading = false
       })
