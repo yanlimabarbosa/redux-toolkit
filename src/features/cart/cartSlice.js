@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import cartItems from "../../cartItems"
 import axios from "axios"
+import { openModal } from "../modal/modalSlice"
 
 const url = "https://www.course-api.com/react-useReducer-cart-project"
 
@@ -11,12 +12,29 @@ const initialState = {
   isLoading: true,
 }
 
-export const getCartItems = createAsyncThunk("cart/getCartItems", async () => {
-  try {
-    const response = await axios.get(url)
-    return response.data
-  } catch (error) {}
-})
+export const getCartItems = createAsyncThunk(
+  "cart/getCartItems",
+  async (name, thunkAPI) => {
+    try {
+      // 1st parameter: recieving value from component:
+      console.log(name)
+
+      // 2nd parameter: ThunkApi
+      console.log(thunkAPI)
+      // with thunk api we can do things such as accesing state
+      // from all the application
+      // example:
+      console.log(thunkAPI.getState())
+
+      // we also can dispatch anything, things that aren't even on
+      // the actual slice, for example:
+      thunkAPI.dispatch(openModal())
+
+      const response = await axios.get(url)
+      return response.data
+    } catch (error) {}
+  }
+)
 
 const cartSlice = createSlice({
   name: "cart",
